@@ -5,12 +5,11 @@ Description: Web API scaffolding for Movie API
  */
 
 var express = require('express');
-var http = require('http');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var authController = require('./auth');
 var authJwtController = require('./auth_jwt');
-db = require('./db')(); //hack
+var db = require('./db')(); //hack
 var jwt = require('jsonwebtoken');
 var cors = require('cors');
 
@@ -81,8 +80,7 @@ router.route('/testcollection')
         }
         var o = getJSONObjectForMovieRequirement(req);
         res.json(o);
-    }
-    )
+    })
     .put(authJwtController.isAuthenticated, (req, res) => {
         console.log(req.body);
         res = res.status(200);
@@ -91,11 +89,11 @@ router.route('/testcollection')
         }
         var o = getJSONObjectForMovieRequirement(req);
         res.json(o);
-    }
-    );
-    
-app.use('/', router);
-app.listen(process.env.PORT || 8080);
-module.exports = app; // for testing only
+    });
 
+app.use('/', router);
+
+app.listen(process.env.PORT || 8080);
+
+module.exports = app; // for testing only
 
