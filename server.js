@@ -39,25 +39,34 @@ function getJSONObjectForMovieRequirement(req) {
 
     return json;
 }
-router.post('/movies', authJwtController.isAuthenticated, (req, res) => {
-    res.status(200).json({ message: "Movie added successfully" });
-});
-
-router.get('/movies', authJwtController.isAuthenticated, (req, res) => {
-    res.status(200).json({ message: "Retrieved all movies" });
-});
-
-router.get('/movies/:id', authJwtController.isAuthenticated, (req, res) => {
-    res.status(200).json({ message: "Retrieved movie by ID" });
-});
-
-router.put('/movies/:id', authJwtController.isAuthenticated, (req, res) => {
-    res.status(200).json({ message: "Movie updated successfully" });
-});
-
-router.delete('/movies/:id', authJwtController.isAuthenticated, (req, res) => {
-    res.status(200).json({ message: "Movie deleted successfully" });
-});
+router.route('/movies')
+    .get((req, res) => {
+        var json = getJSONObjectForMovieRequirement(req);
+        json.status = 200;
+        json.message = 'GET movies';
+        res.json(json);
+    })
+    .post((req, res) => {
+        var json = getJSONObjectForMovieRequirement(req);
+        json.status = 200;
+        json.message = 'movie saved';
+        res.json(json);
+    })
+    .put(authJwtController.isAuthenticated, (req, res) => {
+        var json = getJSONObjectForMovieRequirement(req);
+        json.status = 200;
+        json.message = 'movie updated';
+        res.json(json);
+    })
+    .delete(authController.isAuthenticated, (req, res) => {
+        var json = getJSONObjectForMovieRequirement(req);
+        json.status = 200;
+        json.message = 'movie deleted';
+        res.json(json);
+    })
+    .all((req, res) => {
+        res.status(405).send({ message: 'HTTP method not supported.' });
+    });
 
 router.post('/signup', (req, res) => {
     if (!req.body.username || !req.body.password) {
