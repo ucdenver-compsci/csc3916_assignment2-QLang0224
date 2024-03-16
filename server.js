@@ -39,6 +39,35 @@ function getJSONObjectForMovieRequirement(req) {
 
     return json;
 }
+router.post('/movies', authJwtController.isAuthenticated, (req, res) => {
+    // Implementation for adding a new movie
+    // Example: db.addMovie(req.body);
+    res.status(200).json({ message: "Movie added successfully" });
+});
+
+router.get('/movies', authJwtController.isAuthenticated, (req, res) => {
+    // Implementation for retrieving all movies
+    // Example: var movies = db.getAllMovies();
+    res.status(200).json({ message: "Retrieved all movies" });
+});
+
+router.get('/movies/:id', authJwtController.isAuthenticated, (req, res) => {
+    // Implementation for retrieving a specific movie by ID
+    // Example: var movie = db.getMovieById(req.params.id);
+    res.status(200).json({ message: "Retrieved movie by ID" });
+});
+
+router.put('/movies/:id', authJwtController.isAuthenticated, (req, res) => {
+    // Implementation for updating a specific movie by ID
+    // Example: db.updateMovie(req.params.id, req.body);
+    res.status(200).json({ message: "Movie updated successfully" });
+});
+
+router.delete('/movies/:id', authJwtController.isAuthenticated, (req, res) => {
+    // Implementation for deleting a specific movie by ID
+    // Example: db.deleteMovie(req.params.id);
+    res.status(200).json({ message: "Movie deleted successfully" });
+});
 
 router.post('/signup', (req, res) => {
     if (!req.body.username || !req.body.password) {
